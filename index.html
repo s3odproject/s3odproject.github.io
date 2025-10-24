@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3OD: ...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .venue {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .authors {
+            font-size: 1.1em;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        .affiliations {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 15px;
+        }
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .links a {
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .links a:hover {
+            background-color: #2980b9;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        .abstract {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .figure-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+        }
+        ul {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        li {
+            margin: 10px 0;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid #dee2e6;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>S3OD: Semi-Supervised 3D Object Detection</h1>
+            <div class="venue">arXiv</div>
+            
+            <div class="authors">
+                <strong>Author Name<sup>1</sup>, Author Name<sup>1,2</sup>, Author Name<sup>1</sup></strong>
+            </div>
+            
+            <div class="affiliations">
+                <sup>1</sup>AIST (National Institute of Advanced Industrial Science and Technology)<br>
+                <sup>2</sup>Your Other Affiliation
+            </div>
+            
+            <div class="links">
+                <a href="paper.pdf">📄 Paper</a>
+                <a href="https://arxiv.org/abs/xxxx.xxxxx">arXiv</a>
+                <a href="https://github.com/s3od/s3od-code">💻 Code</a>
+                <a href="https://openreview.net/forum?id=xxxxx">OpenReview</a>
+            </div>
+        </header>
+
+        <section class="section">
+            <h2>Abstract</h2>
+            <div class="abstract">
+                <p>
+                    Your abstract goes here. Provide a concise description of your work,
+                    the problem you're solving, your approach, and key results...
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Overview</h2>
+            <img src="images/teaser.png" alt="Method overview">
+            <p class="figure-caption">Figure 1: Overview of our S3OD framework...</p>
+        </section>
+
+        <section class="section">
+            <h2>Key Contributions</h2>
+            <ul>
+                <li>First contribution: novel approach to...</li>
+                <li>Second contribution: improved performance on...</li>
+                <li>Third contribution: extensive experiments showing...</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Results</h2>
+            <img src="images/results.png" alt="Main results">
+            <p class="figure-caption">Figure 2: Quantitative and qualitative results...</p>
+        </section>
+
+        <section class="section">
+            <h2>BibTeX</h2>
+            <pre><code>@inproceedings{yourname2025s3od,
+  title={S3OD: Semi-Supervised 3D Object Detection},
+  author={Your Authors},
+  booktitle={arXiv},
+  year={2025}
+}</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Acknowledgments</h2>
+            <p>
+                This research was supported by the AIST policy-based budget project 
+                "R&D on Generative AI Foundation Models for the Physical Domain". 
+                Computational resources were provided by ABCI 3.0 from AIST and AIST Solutions. 
+                We are grateful to Andrew Zisserman for valuable discussions and feedback 
+                that helped improve this work.
+            </p>
+        </section>
+    </div>
+</body>
+</html>
