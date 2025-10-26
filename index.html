@@ -3,193 +3,1096 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S3OD: ...</title>
+    <title>S3OD: Towards Generalizable Salient Object Detection with Synthetic Data</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            --accent-color: #8b5cf6;
+            --accent-secondary: #d946ef;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
+            --bg-light: #0f172a;
+            --bg-card: #1e293b;
+            --bg-dark: #020617;
+            --card-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+            --border-color: rgba(139, 92, 246, 0.2);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+            color: #e2e8f0;
+            background-color: var(--bg-dark);
+            scroll-behavior: smooth;
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        header {
+
+        /* Hero Section */
+        .hero {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 100px 20px 80px;
             text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
         }
-        h1 {
-            font-size: 2.5em;
-            color: #2c3e50;
-            margin-bottom: 20px;
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        .venue {
-            font-size: 1.2em;
-            color: #7f8c8d;
-            margin-bottom: 20px;
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
         }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
+                    drop-shadow(0 4px 12px rgba(139, 92, 246, 0.4))
+                    drop-shadow(0 8px 24px rgba(217, 70, 239, 0.3));
+            position: relative;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% {
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
+                        drop-shadow(0 4px 12px rgba(139, 92, 246, 0.4))
+                        drop-shadow(0 8px 24px rgba(217, 70, 239, 0.3));
+            }
+            100% {
+                filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4))
+                        drop-shadow(0 6px 20px rgba(139, 92, 246, 0.6))
+                        drop-shadow(0 12px 36px rgba(217, 70, 239, 0.5));
+            }
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+
         .authors {
-            font-size: 1.1em;
-            margin: 20px 0;
-            line-height: 1.8;
-        }
-        .affiliations {
-            font-size: 0.95em;
-            color: #666;
-            margin-top: 15px;
-        }
-        .links {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
             display: flex;
             justify-content: center;
-            gap: 15px;
             flex-wrap: wrap;
-            margin: 30px 0;
+            gap: 25px;
         }
-        .links a {
-            padding: 12px 24px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.3s;
+
+        .author-name {
+            display: inline-block;
         }
-        .links a:hover {
-            background-color: #2980b9;
-        }
-        .section {
-            margin: 40px 0;
-        }
-        h2 {
-            color: #34495e;
-            font-size: 1.8em;
+
+        .affiliation {
+            font-size: 1.15rem;
+            opacity: 0.9;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
         }
-        .abstract {
-            background-color: #f8f9fa;
-            padding: 25px;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
+
+        .arxiv-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            margin-bottom: 35px;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-weight: 500;
         }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 20px 0;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .figure-caption {
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 90px 20px;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        section:nth-child(odd) {
+            background-color: var(--bg-dark);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
             text-align: center;
-            font-style: italic;
-            color: #666;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* TL;DR Box */
+        .tldr-box {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 25px;
+            margin: 60px auto;
+            max-width: 1000px;
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tldr-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .tldr-box > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tldr-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .tldr-box p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .stat-description {
+            font-size: 0.95rem;
+            color: #94a3b8;
             margin-top: 10px;
         }
-        ul {
-            margin-left: 30px;
+
+        /* Scrollable Dataset Carousel */
+        .dataset-carousel-container {
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .dataset-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--bg-light);
+        }
+
+        .dataset-carousel::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .dataset-carousel::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .dataset-carousel::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+
+        .carousel-item {
+            flex: 0 0 auto;
+            max-width: 400px;
+            scroll-snap-align: start;
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .carousel-item:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-color);
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: auto;
+            min-height: 250px;
+            max-height: 400px;
+            object-fit: contain;
+            background: #0a0f1e;
+        }
+
+        .carousel-label {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #e2e8f0;
+            background: rgba(139, 92, 246, 0.1);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Comparison Slider */
+        .comparison-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .comparison-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .comparison-item:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .comparison-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #0a0f1e;
+        }
+
+        .comparison-label {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            background: rgba(139, 92, 246, 0.1);
+            color: #e2e8f0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #0a0f1e;
+            color: #e2e8f0;
+            padding: 35px;
+            border-radius: 15px;
+            overflow-x: auto;
+            margin-top: 40px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .code-block code {
+            color: #a78bfa;
+            white-space: pre-wrap;
+        }
+
+        .code-comment {
+            color: #64748b;
+        }
+        
+        .code-string {
+            color: #34d399;
+        }
+
+        /* Results Table */
+        .results-container {
+            background: var(--bg-card);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            margin-top: 50px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px 18px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            color: #cbd5e1;
+        }
+
+        tr:hover {
+            background-color: rgba(139, 92, 246, 0.05);
+        }
+
+        .best-row {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(217, 70, 239, 0.15));
+            font-weight: 600;
+        }
+
+        .best-score {
+            color: var(--accent-secondary);
+            font-weight: 700;
+        }
+
+        /* Citation Box */
+        .citation-box {
+            background: #0a0f1e;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent-color);
+            padding: 35px;
+            border-radius: 15px;
+            margin-top: 40px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.95rem;
+            line-height: 1.9;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .citation-box pre {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0f1e;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .authors {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(217, 70, 239, 0.1));
+            border-left: 4px solid var(--accent-color);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .highlight-box h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .highlight-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+
+        .highlight-box ul {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+        }
+
+        .highlight-box li {
+            margin-bottom: 8px;
+        }
+
+        /* Interactive tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            background: transparent;
+            color: #94a3b8;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .tab-button:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: #cbd5e1;
+        }
+
+        .tab-button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .copy-button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
             margin-top: 15px;
         }
-        li {
-            margin: 10px 0;
-        }
-        pre {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 6px;
-            overflow-x: auto;
-            border: 1px solid #dee2e6;
-        }
-        code {
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
+
+        .copy-button:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>S3OD: Semi-Supervised 3D Object Detection</h1>
-            <div class="venue">arXiv</div>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <h1>S3OD: Towards Generalizable Salient Object<br>Detection with Synthetic Data</h1>
+            <p class="tagline">Large-Scale Synthetic Dataset for SOD • Ambiguity-Aware Architecture • State-of-the-Art Model</p>
             
             <div class="authors">
-                <strong>Author Name<sup>1</sup>, Author Name<sup>1,2</sup>, Author Name<sup>1</sup></strong>
+                <span class="author-name">Orest Kupyn</span>
+                <span class="author-name">Hirokatsu Kataoka</span>
+                <span class="author-name">Christian Rupprecht</span>
             </div>
             
-            <div class="affiliations">
-                <sup>1</sup>AIST (National Institute of Advanced Industrial Science and Technology)<br>
-                <sup>2</sup>Your Other Affiliation
+            <p class="affiliation">
+                University of Oxford, VGG • AIST
+            </p>
+            
+            <div class="arxiv-badge">
+                📄 arXiv Preprint
             </div>
             
-            <div class="links">
-                <a href="paper.pdf">📄 Paper</a>
-                <a href="https://arxiv.org/abs/xxxx.xxxxx">arXiv</a>
-                <a href="https://github.com/s3od/s3od-code">💻 Code</a>
-                <a href="https://openreview.net/forum?id=xxxxx">OpenReview</a>
+            <div class="hero-buttons">
+                <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-primary">
+                    📄 arXiv Paper
+                </a>
+                <a href="https://huggingface.co/spaces/okupyn/s3od" class="btn btn-primary" target="_blank" rel="noopener">
+                    🚀 Live Demo
+                </a>
+                <a href="https://github.com/KupynOrest/s3od" class="btn btn-secondary">
+                    💻 Code
+                </a>
+                <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" class="btn btn-secondary" target="_blank" rel="noopener">
+                    🤗 Dataset Viewer
+                </a>
             </div>
-        </header>
+        </div>
+    </div>
 
-        <section class="section">
-            <h2>Abstract</h2>
-            <div class="abstract">
+    <!-- TL;DR -->
+    <section>
+        <div class="container">
+            <div class="tldr-box fade-in-up">
+                <h3>🎯 TL;DR</h3>
                 <p>
-                    Your abstract goes here. Provide a concise description of your work,
-                    the problem you're solving, your approach, and key results...
+                    We present two key contributions: <strong>(1) S3OD Dataset</strong> — 139K+ high-resolution synthetic images generated through 
+                    a multi-modal diffusion pipeline that extracts labels from FLUX DiT features, concept attention maps, and DINO-v3 representations, 
+                    and <strong>(2) Ambiguity-Aware Architecture</strong> — a streamlined model with multi-mask decoder that naturally handles 
+                    inherent ambiguity in salient object detection. Our approach unifies DIS and HR-SOD tasks, achieving state-of-the-art 
+                    performance with strong cross-dataset generalization. 
                 </p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section">
-            <h2>Overview</h2>
-            <img src="images/teaser.png" alt="Method overview">
-            <p class="figure-caption">Figure 1: Overview of our S3OD framework...</p>
-        </section>
+    <!-- Main Teaser Figure -->
+    <section style="padding: 40px 20px;">
+        <div class="container">
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); 
+                        padding: 40px; border-radius: 25px; box-shadow: var(--card-shadow); 
+                        border: 1px solid var(--border-color);">
+                <img src="images/main_page.png" 
+                     alt="S3OD Overview: Synthetic dataset samples and model predictions" 
+                     style="width: 100%; max-width: 1100px; margin: 0 auto; display: block; 
+                            border-radius: 15px;">
+            </div>
+        </div>
+    </section>
 
-        <section class="section">
-            <h2>Key Contributions</h2>
-            <ul>
-                <li>First contribution: novel approach to...</li>
-                <li>Second contribution: improved performance on...</li>
-                <li>Third contribution: extensive experiments showing...</li>
-            </ul>
-        </section>
+    <!-- Key Stats -->
+    <section style="background-color: var(--bg-light);">
+        <div class="container">
+            <h2>Dataset & Model Highlights</h2>
+            <p class="section-subtitle">Addressing the data bottleneck through synthetic data generation</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">139K+</span>
+                    <div class="stat-label">Synthetic Images</div>
+                    <div class="stat-description">2× larger than all existing SOD datasets combined</div>
+                </div>
+                
+                <div class="stat-card">
+                    <span class="stat-number">SOTA</span>
+                    <div class="stat-label">Performance</div>
+                    <div class="stat-description">State-of-the-art across DIS and HR-SOD benchmarks</div>
+                </div>
+                
+                <div class="stat-card">
+                    <span class="stat-number">1,676</span>
+                    <div class="stat-label">Object Categories</div>
+                    <div class="stat-description">Diverse scenes across multiple domains</div>
+                </div>
+                
+                <div class="stat-card">
+                    <span class="stat-number">Multi-Modal</span>
+                    <div class="stat-label">Diffusion Pipeline</div>
+                    <div class="stat-description">High-quality complex data with accurate annotations</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section class="section">
-            <h2>Results</h2>
-            <img src="images/results.png" alt="Main results">
-            <p class="figure-caption">Figure 2: Quantitative and qualitative results...</p>
-        </section>
+    <!-- Dataset Showcase with Scrollable Carousel -->
+    <section>
+        <div class="container">
+            <h2>The S3OD Dataset</h2>
+            <p class="section-subtitle">Scroll through our diverse, high-quality synthetic samples</p>
+            
+            <div class="highlight-box">
+                <h3>🎨 Multi-Modal Diffusion Pipeline</h3>
+                <p>
+                    Our pipeline simultaneously generates images and masks by extracting multi-modal signals during diffusion:
+                </p>
+                <ul style="margin-top: 15px; padding-left: 20px; line-height: 2;">
+                    <li><strong>FLUX DiT Features</strong> — Rich spatial understanding encoded during generation</li>
+                    <li><strong>Concept Attention Maps</strong> — Object-level focus from cross-attention layers</li>
+                    <li><strong>DINO-v3 Visual Features</strong> — Robust semantic representations from self-supervised learning</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    This ensures strong image-label alignment and high-quality annotations without teacher model bottlenecks.
+                </p>
+            </div>
 
-        <section class="section">
-            <h2>BibTeX</h2>
-            <pre><code>@inproceedings{yourname2025s3od,
-  title={S3OD: Semi-Supervised 3D Object Detection},
-  author={Your Authors},
-  booktitle={arXiv},
+            <div class="highlight-box">
+                <h3>🔄 Iterative Generation Framework</h3>
+                <p>
+                    Our feedback-driven approach dynamically identifies model weaknesses and adapts the sampling distribution:
+                </p>
+                <ul style="margin-top: 15px; padding-left: 20px; line-height: 2;">
+                    <li><strong>Performance Monitoring</strong> — Evaluate model on validation set to identify weak categories</li>
+                    <li><strong>Adaptive Sampling</strong> — Prioritize generation of challenging object categories</li>
+                    <li><strong>Continuous Improvement</strong> — Dataset quality improves iteratively as it grows</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    Unlike static methods, this enables targeted data generation where the model needs it most.
+                </p>
+            </div>
+
+            <div class="dataset-carousel-container">
+                <div class="dataset-carousel">
+                    <!-- Dataset samples - replace with actual images -->
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_1.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Animals</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_2.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Camping</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_3.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Vehicles</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_4.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Cuisine</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_5.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Sports</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_6.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Furniture</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_7.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Wildlife</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/dataset_sample_8.jpg" alt="Sample" class="carousel-image">
+                        <div class="carousel-label">Big Cats</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 25px; color: var(--text-light); font-size: 0.95rem;">
+                    ← Scroll to explore more categories →
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" class="btn btn-primary" target="_blank" rel="noopener">
+                    🔍 Explore in Dataset Viewer
+                </a>
+                <a href="https://huggingface.co/datasets/okupyn/s3od_dataset" class="btn btn-secondary" target="_blank" rel="noopener">
+                    💾 Download Dataset
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section style="background-color: var(--bg-light);">
+        <div class="container">
+            <h2>Cross-Dataset Generalization</h2>
+            <p class="section-subtitle">Synthetic pre-training resulting in strong real-world generalization</p>
+            
+            <div class="results-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Training Data</th>
+                            <th>DAVIS-S F<sub>m</sub>↑</th>
+                            <th>HRSOD-TE F<sub>m</sub>↑</th>
+                            <th>DUTS-TE F<sub>m</sub>↑</th>
+                            <th>DUT-OMRON F<sub>m</sub>↑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>InSPyReNet</td>
+                            <td>DIS-5K</td>
+                            <td>.921</td>
+                            <td>.891</td>
+                            <td>.845</td>
+                            <td>.713</td>
+                        </tr>
+                        <tr>
+                            <td>BiRefNet</td>
+                            <td>DIS-5K</td>
+                            <td>.919</td>
+                            <td>.887</td>
+                            <td>.860</td>
+                            <td>.744</td>
+                        </tr>
+                        <tr>
+                            <td>MVANet</td>
+                            <td>DIS-5K</td>
+                            <td>.907</td>
+                            <td>.902</td>
+                            <td>.852</td>
+                            <td>.711</td>
+                        </tr>
+                        <tr>
+                            <td>S3OD (Ours)</td>
+                            <td>DIS-5K</td>
+                            <td>.951</td>
+                            <td>.923</td>
+                            <td>.902</td>
+                            <td>.808</td>
+                        </tr>
+                        <tr class="best-row">
+                            <td><strong>S3OD (Ours)</strong></td>
+                            <td><strong>S3OD Synthetic Only</strong></td>
+                            <td class="best-score">.970</td>
+                            <td class="best-score">.954</td>
+                            <td class="best-score">.937</td>
+                            <td class="best-score">.860</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 50px; text-align: center;">
+                <h3>🚀 Try It Yourself!</h3>
+                <p style="margin-bottom: 25px;">
+                    Upload your own images and see S3OD in action with our interactive demo on HuggingFace Spaces.
+                </p>
+                <a href="https://huggingface.co/spaces/okupyn/s3od" class="btn btn-primary" target="_blank" rel="noopener" style="display: inline-flex;">
+                    🎯 Launch Interactive Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code & Usage -->
+    <section id="code" style="background-color: var(--bg-light);">
+        <div class="container">
+            <h2>Get Started in Seconds</h2>
+            <p class="section-subtitle">Simple Python API for state-of-the-art segmentation</p>
+            
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab(event, 'install-tab')">Installation</button>
+                <button class="tab-button" onclick="switchTab(event, 'usage-tab')">Quick Start</button>
+                <button class="tab-button" onclick="switchTab(event, 'dataset-tab')">Dataset</button>
+            </div>
+
+            <div id="install-tab" class="tab-content active">
+                <div class="code-block"><pre><span class="code-comment"># Install from GitHub</span>
+<code>pip install git+https://github.com/KupynOrest/s3od.git</code></pre></div>
+                <button class="copy-button" onclick="copyCode('pip install git+https://github.com/KupynOrest/s3od.git')">📋 Copy</button>
+            </div>
+
+            <div id="usage-tab" class="tab-content">
+                <div class="code-block"><pre><span class="code-comment"># Import and initialize</span>
+<code>from s3od import BackgroundRemoval
+from PIL import Image
+
+<span class="code-comment"># Initialize detector (automatically downloads model from HuggingFace)</span>
+detector = BackgroundRemoval()
+
+<span class="code-comment"># Load and process image</span>
+image = Image.open(<span class="code-string">"your_image.jpg"</span>)
+result = detector.remove_background(image)
+
+<span class="code-comment"># Save result with transparent background</span>
+result.rgba_image.save(<span class="code-string">"output.png"</span>)
+
+<span class="code-comment"># Access predictions</span>
+best_mask = result.predicted_mask  <span class="code-comment"># Best mask (H, W) numpy array</span>
+all_masks = result.all_masks       <span class="code-comment"># All masks (N, H, W) numpy array</span>
+all_ious = result.all_ious         <span class="code-comment"># IoU scores (N,) numpy array</span></code></pre></div>
+                <button class="copy-button" onclick="copyCode(`from s3od import BackgroundRemoval\nfrom PIL import Image\n\ndetector = BackgroundRemoval()\nimage = Image.open(\"your_image.jpg\")\nresult = detector.remove_background(image)\nresult.rgba_image.save(\"output.png\")\nbest_mask = result.predicted_mask\nall_masks = result.all_masks\nall_ious = result.all_ious`)">📋 Copy</button>
+            </div>
+
+            <div id="dataset-tab" class="tab-content">
+                <div class="code-block"><pre><span class="code-comment"># Load the S3OD dataset from HuggingFace</span>
+<code>from datasets import load_dataset
+
+dataset = load_dataset(<span class="code-string">"okupyn/s3od_dataset"</span>)
+
+<span class="code-comment"># Access samples</span>
+for sample in dataset[<span class="code-string">'train'</span>]:
+    image = sample[<span class="code-string">'image'</span>]
+    mask = sample[<span class="code-string">'mask'</span>]
+    <span class="code-comment"># Process your data...</span></code></pre></div>
+                <button class="copy-button" onclick="copyCode(`from datasets import load_dataset\ndataset = load_dataset(\"okupyn/s3od_dataset\")`)">📋 Copy</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://github.com/your-repo/s3od" class="btn btn-primary">
+                    💻 Browse Code on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation -->
+    <section>
+        <div class="container">
+            <h2>Citation</h2>
+            <p class="section-subtitle">If you find S3OD useful, please cite our work</p>
+            
+            <div class="citation-box"><pre>@article{s3od2025,
+  title={S3OD: Towards Generalizable Salient Object Detection with Synthetic Data},
+  author={Kupyn, Orest and Kataoka, Hirokatsu and Rupprecht, Christian},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
   year={2025}
-}</code></pre>
-        </section>
+}</pre></div>
+        </div>
+    </section>
 
-        <section class="section">
-            <h2>Acknowledgments</h2>
-            <p>
-                This research was supported by the AIST policy-based budget project 
-                "R&D on Generative AI Foundation Models for the Physical Domain". 
-                Computational resources were provided by ABCI 3.0 from AIST and AIST Solutions. 
-                We are grateful to Andrew Zisserman for valuable discussions and feedback 
-                that helped improve this work.
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                S3OD: Towards Generalizable Salient Object Detection with Synthetic Data
             </p>
-        </section>
-    </div>
+            <p style="opacity: 0.8; margin-bottom: 25px;">
+                University of Oxford, VGG • AIST
+            </p>
+            <p style="opacity: 0.7;">
+                <a href="https://arxiv.org/abs/XXXX.XXXXX">Paper</a> • 
+                <a href="https://huggingface.co/spaces/okupyn/s3od" target="_blank" rel="noopener">Demo</a> • 
+                <a href="https://github.com/your-repo/s3od">Code</a> • 
+                <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" target="_blank" rel="noopener">Dataset</a> • 
+                <a href="#code">Documentation</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive features -->
+    <script>
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .comparison-container, .highlight-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Tab switching
+        function switchTab(event, tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab and mark button as active
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Copy code functionality
+        function copyCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                // Show feedback
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '✓ Copied!';
+                button.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Add smooth hover effect to cards
+        document.querySelectorAll('.stat-card, .carousel-item, .comparison-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+    </script>
 </body>
 </html>
