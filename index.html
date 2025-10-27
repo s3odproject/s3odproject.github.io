@@ -124,6 +124,16 @@
             margin-bottom: 35px;
             border: 1px solid rgba(255,255,255,0.3);
             font-weight: 500;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .arxiv-badge:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
         }
 
         .container {
@@ -684,12 +694,8 @@
                 University of Oxford, VGG • AIST
             </p>
             
-            <div class="arxiv-badge">
-                📄 arXiv Preprint
-            </div>
-            
             <div class="hero-buttons">
-                <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-primary">
+                <a href="https://arxiv.org/abs/2510.21605" class="btn btn-primary">
                     📄 arXiv Paper
                 </a>
                 <a href="https://huggingface.co/spaces/okupyn/s3od" class="btn btn-primary" target="_blank" rel="noopener">
@@ -1003,7 +1009,7 @@ for sample in dataset[<span class="code-string">'train'</span>]:
             <div class="citation-box"><pre>@article{s3od2025,
   title={S3OD: Towards Generalizable Salient Object Detection with Synthetic Data},
   author={Kupyn, Orest and Kataoka, Hirokatsu and Rupprecht, Christian},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  journal={arXiv preprint arXiv:2510.21605},
   year={2025}
 }</pre></div>
         </div>
@@ -1019,7 +1025,7 @@ for sample in dataset[<span class="code-string">'train'</span>]:
                 University of Oxford, VGG • AIST
             </p>
             <p style="opacity: 0.7;">
-                <a href="https://arxiv.org/abs/XXXX.XXXXX">Paper</a> • 
+                <a href="https://arxiv.org/abs/2510.21605">Paper</a> • 
                 <a href="https://huggingface.co/spaces/okupyn/s3od" target="_blank" rel="noopener">Demo</a> • 
                 <a href="https://github.com/your-repo/s3od">Code</a> • 
                 <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" target="_blank" rel="noopener">Dataset</a> • 
