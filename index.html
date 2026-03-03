@@ -12,16 +12,16 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
-            --accent-color: #8b5cf6;
-            --accent-secondary: #d946ef;
+            --primary-gradient: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #86198f 100%);
+            --accent-color: #7c3aed;
+            --accent-secondary: #9d174d;
             --text-dark: #0f172a;
             --text-light: #64748b;
             --bg-light: #0f172a;
-            --bg-card: #1e293b;
-            --bg-dark: #020617;
-            --card-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
-            --border-color: rgba(139, 92, 246, 0.2);
+            --bg-card: #1a2236;
+            --bg-dark: #060b17;
+            --card-shadow: 0 10px 40px rgba(109, 40, 217, 0.18);
+            --border-color: rgba(109, 40, 217, 0.2);
         }
 
         body {
@@ -34,7 +34,7 @@
 
         /* Hero Section */
         .hero {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 40%, #4c1d95 70%, #2d1b69 100%);
             color: white;
             padding: 100px 20px 80px;
             text-align: center;
@@ -77,15 +77,29 @@
 
         @keyframes titleGlow {
             0% {
-                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
-                        drop-shadow(0 4px 12px rgba(139, 92, 246, 0.4))
-                        drop-shadow(0 8px 24px rgba(217, 70, 239, 0.3));
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4))
+                        drop-shadow(0 4px 12px rgba(109, 40, 217, 0.5))
+                        drop-shadow(0 8px 24px rgba(134, 25, 143, 0.3));
             }
             100% {
-                filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4))
-                        drop-shadow(0 6px 20px rgba(139, 92, 246, 0.6))
-                        drop-shadow(0 12px 36px rgba(217, 70, 239, 0.5));
+                filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5))
+                        drop-shadow(0 6px 20px rgba(109, 40, 217, 0.7))
+                        drop-shadow(0 12px 36px rgba(134, 25, 143, 0.5));
             }
+        }
+
+        /* ICLR venue badge */
+        .venue-badge {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.45);
+            color: #fde68a;
+            padding: 8px 26px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
         }
 
         .hero .tagline {
@@ -682,8 +696,11 @@
     <div class="hero">
         <div class="container">
             <h1>S3OD: Towards Generalizable Salient Object<br>Detection with Synthetic Data</h1>
+
+            <div class="venue-badge">ICLR 2026</div>
+
             <p class="tagline">Large-Scale Synthetic Dataset for SOD • Ambiguity-Aware Architecture • State-of-the-Art Model</p>
-            
+
             <div class="authors">
                 <span class="author-name">Orest Kupyn</span>
                 <span class="author-name">Hirokatsu Kataoka</span>
@@ -695,40 +712,61 @@
             </p>
             
             <div class="hero-buttons">
-                <a href="https://arxiv.org/abs/2510.21605" class="btn btn-primary">
-                    📄 arXiv Paper
+                <a href="https://arxiv.org/abs/2510.21605" class="btn btn-primary" target="_blank" rel="noopener">
+                    📄 arXiv
                 </a>
                 <a href="https://huggingface.co/spaces/okupyn/s3od" class="btn btn-primary" target="_blank" rel="noopener">
-                    🚀 Live Demo
+                    🚀 Demo
                 </a>
-                <a href="https://github.com/KupynOrest/s3od" class="btn btn-secondary">
+                <a href="https://github.com/KupynOrest/s3od" class="btn btn-secondary" target="_blank" rel="noopener">
                     💻 Code
                 </a>
+                <a href="https://huggingface.co/okupyn/s3od" class="btn btn-secondary" target="_blank" rel="noopener">
+                    🤗 Model
+                </a>
                 <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" class="btn btn-secondary" target="_blank" rel="noopener">
-                    🤗 Dataset Viewer
+                    📦 Dataset
                 </a>
             </div>
         </div>
     </div>
 
     <!-- TL;DR -->
-    <section>
+    <section style="background-color: var(--bg-light);">
         <div class="container">
             <div class="tldr-box fade-in-up">
                 <h3>🎯 TL;DR</h3>
                 <p>
-                    We present two key contributions: <strong>(1) S3OD Dataset</strong> — 139K+ high-resolution synthetic images generated through 
-                    a multi-modal diffusion pipeline that extracts labels from FLUX DiT features, concept attention maps, and DINO-v3 representations, 
+                    We present two key contributions: <strong>(1) S3OD Dataset</strong> — 139K+ high-resolution synthetic images 
+                    generated through a multi-modal diffusion pipeline that extracts labels from FLUX DiT features, concept attention maps, and 
+                    DINO-v3 representations, proving that diffusion models can generate complex data with high-quality accurate annotations — 
                     and <strong>(2) Ambiguity-Aware Architecture</strong> — a streamlined model with multi-mask decoder that naturally handles 
-                    inherent ambiguity in salient object detection. Our approach unifies DIS and HR-SOD tasks, achieving state-of-the-art 
-                    performance with strong cross-dataset generalization. 
+                    inherent ambiguity in salient object detection. Together, they unify DIS and HR-SOD, achieving state-of-the-art performance 
+                    with strong cross-dataset generalization.
                 </p>
             </div>
         </div>
     </section>
 
+    <!-- Abstract -->
+    <section style="background-color: var(--bg-dark);">
+        <div class="container">
+            <h2>Abstract</h2>
+            <p style="max-width: 860px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9; color: #cbd5e1; text-align: justify;">
+                Salient object detection exemplifies data-bounded tasks where expensive pixel-precise annotations force separate model training 
+                for related subtasks like DIS and HR-SOD. We present a method that dramatically improves generalization through large-scale 
+                synthetic data generation and ambiguity-aware architecture. We introduce S3OD, a dataset of over 139,000 high-resolution images 
+                created through our multi-modal diffusion pipeline that extracts labels from diffusion and DINO-v3 features. The iterative 
+                generation framework prioritizes challenging categories based on model performance. We propose a streamlined multi-mask decoder 
+                that handles the inherent ambiguity in salient object detection by predicting multiple valid interpretations. Models trained only 
+                on synthetic data achieve 20–50% error reduction in cross-dataset generalization, while fine-tuned versions reach state-of-the-art 
+                performance across DIS and HR-SOD benchmarks.
+            </p>
+        </div>
+    </section>
+
     <!-- Main Teaser Figure -->
-    <section style="padding: 40px 20px;">
+    <section style="padding: 40px 20px; background-color: var(--bg-light);">
         <div class="container">
             <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); 
                         padding: 40px; border-radius: 25px; box-shadow: var(--card-shadow); 
@@ -742,7 +780,7 @@
     </section>
 
     <!-- Key Stats -->
-    <section style="background-color: var(--bg-light);">
+    <section style="background-color: var(--bg-dark);">
         <div class="container">
             <h2>Dataset & Model Highlights</h2>
             <p class="section-subtitle">Addressing the data bottleneck through synthetic data generation</p>
@@ -776,7 +814,7 @@
     </section>
 
     <!-- Dataset Showcase with Scrollable Carousel -->
-    <section>
+    <section style="background-color: var(--bg-light);">
         <div class="container">
             <h2>The S3OD Dataset</h2>
             <p class="section-subtitle">Scroll through our diverse, high-quality synthetic samples</p>
@@ -808,6 +846,21 @@
                 </ul>
                 <p style="margin-top: 15px;">
                     Unlike static methods, this enables targeted data generation where the model needs it most.
+                </p>
+            </div>
+
+            <!-- Pipeline Figure -->
+            <div style="margin: 50px 0;">
+                <div style="background: linear-gradient(135deg, #f8fafc 0%, #e8edf5 100%);
+                            padding: 35px; border-radius: 20px; 
+                            border: 1px solid var(--border-color);
+                            box-shadow: var(--card-shadow);">
+                    <img src="images/pipeline_s3od.png"
+                         alt="S3OD Data Generation Pipeline"
+                         style="width: 100%; max-width: 1060px; margin: 0 auto; display: block; border-radius: 10px;">
+                </div>
+                <p style="text-align: center; margin-top: 16px; color: #94a3b8; font-size: 0.92rem; font-style: italic;">
+                    The S3OD pipeline: categories and sampling weights feed a prompt generator, which drives FLUX-based diffusion. Intermediate DiT features are decoded by a DPT head alongside DINO-v3 features to produce image-mask pairs. Per-category evaluation closes the feedback loop.
                 </p>
             </div>
 
@@ -864,7 +917,7 @@
     </section>
 
     <!-- Results -->
-    <section style="background-color: var(--bg-light);">
+    <section style="background-color: var(--bg-dark);">
         <div class="container">
             <h2>Cross-Dataset Generalization</h2>
             <p class="section-subtitle">Synthetic pre-training resulting in strong real-world generalization</p>
@@ -926,6 +979,10 @@
                 </table>
             </div>
 
+            <p style="margin-top: 18px; color: #64748b; font-size: 0.88rem; text-align: right;">
+                F<sub>m</sub>↑ = F-measure (higher is better). All models evaluated zero-shot on datasets not seen during training.
+            </p>
+
             <div class="highlight-box" style="margin-top: 50px; text-align: center;">
                 <h3>🚀 Try It Yourself!</h3>
                 <p style="margin-bottom: 25px;">
@@ -939,7 +996,7 @@
     </section>
 
     <!-- Code & Usage -->
-    <section id="code" style="background-color: var(--bg-light);">
+    <section id="code" style="background-color: var(--bg-dark);">
         <div class="container">
             <h2>Get Started in Seconds</h2>
             <p class="section-subtitle">Simple Python API for state-of-the-art segmentation</p>
@@ -992,25 +1049,29 @@ for sample in dataset[<span class="code-string">'train'</span>]:
                 <button class="copy-button" onclick="copyCode(`from datasets import load_dataset\ndataset = load_dataset(\"okupyn/s3od_dataset\")`)">📋 Copy</button>
             </div>
 
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="https://github.com/your-repo/s3od" class="btn btn-primary">
+            <div style="text-align: center; margin-top: 40px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://github.com/KupynOrest/s3od" class="btn btn-primary" target="_blank" rel="noopener">
                     💻 Browse Code on GitHub
+                </a>
+                <a href="https://huggingface.co/okupyn/s3od" class="btn btn-secondary" target="_blank" rel="noopener">
+                    🤗 Model Card
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Citation -->
-    <section>
+    <section style="background-color: var(--bg-light);">
         <div class="container">
             <h2>Citation</h2>
-            <p class="section-subtitle">If you find S3OD useful, please cite our work</p>
+            <p class="section-subtitle">If you find S3OD useful in your research, please consider citing our work</p>
             
-            <div class="citation-box"><pre>@article{s3od2025,
-  title={S3OD: Towards Generalizable Salient Object Detection with Synthetic Data},
-  author={Kupyn, Orest and Kataoka, Hirokatsu and Rupprecht, Christian},
-  journal={arXiv preprint arXiv:2510.21605},
-  year={2025}
+            <div class="citation-box"><pre>@inproceedings{kupyn2026s3od,
+  title     = {S3OD: Towards Generalizable Salient Object Detection with Synthetic Data},
+  author    = {Kupyn, Orest and Kataoka, Hirokatsu and Rupprecht, Christian},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2026},
+  url       = {https://arxiv.org/abs/2510.21605}
 }</pre></div>
         </div>
     </section>
@@ -1018,18 +1079,21 @@ for sample in dataset[<span class="code-string">'train'</span>]:
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p style="font-size: 1.1rem; margin-bottom: 20px;">
+            <p style="font-size: 1.1rem; margin-bottom: 8px; font-weight: 600;">
                 S3OD: Towards Generalizable Salient Object Detection with Synthetic Data
             </p>
-            <p style="opacity: 0.8; margin-bottom: 25px;">
+            <p style="opacity: 0.7; margin-bottom: 5px; font-size: 0.95rem;">
+                ICLR 2026
+            </p>
+            <p style="opacity: 0.6; margin-bottom: 25px; font-size: 0.9rem;">
                 University of Oxford, VGG • AIST
             </p>
             <p style="opacity: 0.7;">
-                <a href="https://arxiv.org/abs/2510.21605">Paper</a> • 
-                <a href="https://huggingface.co/spaces/okupyn/s3od" target="_blank" rel="noopener">Demo</a> • 
-                <a href="https://github.com/your-repo/s3od">Code</a> • 
-                <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" target="_blank" rel="noopener">Dataset</a> • 
-                <a href="#code">Documentation</a>
+                <a href="https://arxiv.org/abs/2510.21605" target="_blank" rel="noopener">arXiv</a> •
+                <a href="https://huggingface.co/spaces/okupyn/s3od" target="_blank" rel="noopener">Demo</a> •
+                <a href="https://github.com/KupynOrest/s3od" target="_blank" rel="noopener">Code</a> •
+                <a href="https://huggingface.co/okupyn/s3od" target="_blank" rel="noopener">Model</a> •
+                <a href="https://huggingface.co/datasets/okupyn/s3od_dataset/viewer" target="_blank" rel="noopener">Dataset</a>
             </p>
         </div>
     </footer>
